@@ -64,7 +64,7 @@
 
    | 频道         | 需要填写的字段                                       |
    | ------------ | ---------------------------------------------------- |
-   | **钉钉**     | Client ID、Client Secret                             |
+   | **钉钉**     | Client ID、Client Secret、消息类型、Card 模板 ID/Key、Robot Code |
    | **飞书**     | App ID、App Secret、加密密钥、验证令牌、媒体文件目录 |
    | **Discord**  | Bot Token、HTTP 代理、代理认证                       |
    | **QQ**       | App ID、Client Secret                                |
