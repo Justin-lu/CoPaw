@@ -70,7 +70,7 @@ iMessage, and Console.
 
    | Channel      | Required fields                                                |
    | ------------ | -------------------------------------------------------------- |
-   | **DingTalk** | Client ID, Client Secret                                       |
+   | **DingTalk** | Client ID, Client Secret, Message Type, Card Template ID/Key, Robot Code |
    | **Feishu**   | App ID, App Secret, Encrypt Key, Verification Token, Media Dir |
    | **Discord**  | Bot Token, HTTP Proxy, Proxy Auth                              |
    | **QQ**       | App ID, Client Secret                                          |
