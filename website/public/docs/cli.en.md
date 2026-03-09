@@ -243,7 +243,7 @@ The interactive `config` flow lets you pick a channel, enable/disable it, and en
 | ------------ | --------------------------------------------- |
 | **iMessage** | Bot prefix, database path, poll interval      |
 | **Discord**  | Bot prefix, Bot Token, HTTP proxy, proxy auth |
-| **DingTalk** | Bot prefix, Client ID, Client Secret          |
+| **DingTalk** | Bot prefix, Client ID, Client Secret, Message Type, Card Template ID/Key, Robot Code |
 | **Feishu**   | Bot prefix, App ID, App Secret                |
 | **QQ**       | Bot prefix, App ID, Client Secret             |
 | **Console**  | Bot prefix                                    |
