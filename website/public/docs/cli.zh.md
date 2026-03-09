@@ -231,7 +231,7 @@ copaw channels config                  # 交互式配置
 | ------------ | ---------------------------------------- |
 | **iMessage** | Bot 前缀、数据库路径、轮询间隔           |
 | **Discord**  | Bot 前缀、Bot Token、HTTP 代理、代理认证 |
-| **DingTalk** | Bot 前缀、Client ID、Client Secret       |
+| **DingTalk** | Bot 前缀、Client ID、Client Secret、消息类型、Card 模板 ID/Key、Robot Code |
 | **Feishu**   | Bot 前缀、App ID、App Secret             |
 | **QQ**       | Bot 前缀、App ID、Client Secret          |
 | **Console**  | Bot 前缀                                 |

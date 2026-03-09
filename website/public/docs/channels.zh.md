@@ -78,12 +78,18 @@
   "enabled": true,
   "bot_prefix": "[BOT]",
   "client_id": "你的 Client ID",
-  "client_secret": "你的 Client Secret"
+  "client_secret": "你的 Client Secret",
+  "message_type": "markdown",
+  "card_template_id": "",
+  "card_template_key": "content",
+  "robot_code": "",
   "filter_tool_messages": false
 }
 ```
 
 - 若希望隐藏工具执行详情，可设置 `filter_tool_messages: true`。
+- AI Card 模式：将 `message_type` 设为 `card`，并填写 `card_template_id`；`card_template_key` 必须与钉钉模板变量名完全一致（默认 `content`）。
+- 群聊场景建议显式配置 `robot_code`；留空时 CoPaw 会回退使用 `client_id`。
 
 保存后若服务已运行会自动重载；未运行则执行 `copaw app` 启动。
 
@@ -552,7 +558,7 @@ JSON消息格式
 
 | 频道     | 配置键   | 必填/主要字段                                                       |
 | -------- | -------- | ------------------------------------------------------------------- |
-| 钉钉     | dingtalk | client_id, client_secret                                            |
+| 钉钉     | dingtalk | client_id, client_secret, message_type, card_template_id, card_template_key, robot_code |
 | 飞书     | feishu   | app_id, app_secret；可选 encrypt_key, verification_token, media_dir |
 | iMessage | imessage | db_path, poll_sec（仅 macOS）                                       |
 | Discord  | discord  | bot_token；可选 http_proxy, http_proxy_auth                         |
