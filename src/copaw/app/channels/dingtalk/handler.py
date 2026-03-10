@@ -15,7 +15,7 @@ from agentscope_runtime.engine.schemas.agent_schemas import (
 
 from ..base import ContentType
 
-from .constants import SENT_VIA_WEBHOOK
+from .constants import SENT_VIA_AI_CARD, SENT_VIA_WEBHOOK
 from .content_utils import (
     conversation_id_from_chatbot_message,
     conversation_type_from_chatbot_message,
@@ -257,6 +257,13 @@ class DingTalkChannelHandler(dingtalk_stream.ChatbotHandler):
                 "reply_loop": loop,
                 "conversation_type": conversation_type,
                 "is_group": conversation_type == "group",
+                "sender_staff_id": getattr(
+                    incoming_message,
+                    "sender_staff_id",
+                    None,
+                )
+                or getattr(incoming_message, "senderStaffId", None)
+                or "",
             }
             if conversation_id:
                 meta["conversation_id"] = conversation_id
@@ -330,7 +337,10 @@ class DingTalkChannelHandler(dingtalk_stream.ChatbotHandler):
             self._emit_native_threadsafe(native)
 
             response_text = await reply_future
-            if response_text == SENT_VIA_WEBHOOK:
+            if response_text == SENT_VIA_AI_CARD:
+                logger.info("sent to=%s via ai card", sender)
+                self.reply_text(" ", incoming_message)
+            elif response_text == SENT_VIA_WEBHOOK:
                 logger.info(
                     "sent to=%s via sessionWebhook (multi-message)",
                     sender,
