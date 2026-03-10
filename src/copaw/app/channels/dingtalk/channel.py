@@ -1764,8 +1764,8 @@ class DingTalkChannel(BaseChannel):
             "outTrackId": card_instance_id,
             "cardData": {"cardParamMap": {self.card_template_key: ""}},
             "callbackType": "STREAM",
-            "imGroupOpenSpaceModel": {},
-            "imRobotOpenSpaceModel": {},
+            "imGroupOpenSpaceModel": {"supportForward": True},
+            "imRobotOpenSpaceModel": {"supportForward": True},
         }
         create_url = "https://api.dingtalk.com/v1.0/card/instances"
         async with self._http.post(
@@ -1831,7 +1831,11 @@ class DingTalkChannel(BaseChannel):
             for item in deliver_results:
                 if isinstance(item, dict) and item.get("success") is False:
                     err = item.get("errorMsg") or item.get("errmsg") or "unknown error"
-                    raise RuntimeError(f"deliver ai card business failed: {err}")
+                    raise RuntimeError(
+                        f"deliver ai card business failed: {err}; "
+                        f"openSpaceId={deliver_payload.get('openSpaceId')}"
+                    )
+
 
         now_ms = int(time.time() * 1000)
         card = ActiveAICard(

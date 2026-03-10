@@ -80,6 +80,10 @@ def test_create_ai_card_dm_uses_sender_staff_id() -> None:
         inbound=False,
     ))
 
+    create = ch._http.calls[0]["json"]
+    assert create["imGroupOpenSpaceModel"] == {"supportForward": True}
+    assert create["imRobotOpenSpaceModel"] == {"supportForward": True}
+
     deliver = ch._http.calls[1]["json"]
     assert deliver["openSpaceId"] == "dtv1.card//IM_ROBOT.staff123"
     assert deliver["imRobotOpenDeliverModel"] == {"spaceType": "IM_ROBOT"}
