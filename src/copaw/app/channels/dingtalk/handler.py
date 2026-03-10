@@ -15,7 +15,7 @@ from agentscope_runtime.engine.schemas.agent_schemas import (
 
 from ..base import ContentType
 
-from .constants import SENT_VIA_WEBHOOK
+from .constants import SENT_VIA_AI_CARD, SENT_VIA_WEBHOOK
 from .content_utils import (
     conversation_id_from_chatbot_message,
     conversation_type_from_chatbot_message,
@@ -34,6 +34,23 @@ FILENAME_HINT_BY_MAPPED = {
     "video": "video.mp4",
 }
 DEFAULT_FILENAME_HINT = "file.bin"
+
+
+def _sender_staff_id_from_incoming_message(incoming_message: Any) -> str:
+    """Extract sender staff id from DingTalk incoming message variants."""
+    for key in ("sender_staff_id", "senderStaffId", "sender_staffid"):
+        val = getattr(incoming_message, key, None)
+        if isinstance(val, str) and val.strip():
+            return val.strip()
+    try:
+        data = incoming_message.to_dict()
+    except Exception:
+        data = {}
+    for key in ("senderStaffId", "sender_staff_id", "senderId"):
+        val = data.get(key)
+        if isinstance(val, str) and val.strip():
+            return val.strip()
+    return ""
 
 
 class DingTalkChannelHandler(dingtalk_stream.ChatbotHandler):
@@ -260,6 +277,11 @@ class DingTalkChannelHandler(dingtalk_stream.ChatbotHandler):
             }
             if conversation_id:
                 meta["conversation_id"] = conversation_id
+            sender_staff_id = _sender_staff_id_from_incoming_message(
+                incoming_message,
+            )
+            if sender_staff_id:
+                meta["sender_staff_id"] = sender_staff_id
             if raw_msg_id:
                 meta["message_id"] = raw_msg_id
             sw = getattr(incoming_message, "sessionWebhook", None) or getattr(
@@ -330,7 +352,10 @@ class DingTalkChannelHandler(dingtalk_stream.ChatbotHandler):
             self._emit_native_threadsafe(native)
 
             response_text = await reply_future
-            if response_text == SENT_VIA_WEBHOOK:
+            if response_text == SENT_VIA_AI_CARD:
+                logger.info("sent to=%s via ai card", sender)
+                self.reply_text(" ", incoming_message)
+            elif response_text == SENT_VIA_WEBHOOK:
                 logger.info(
                     "sent to=%s via sessionWebhook (multi-message)",
                     sender,
