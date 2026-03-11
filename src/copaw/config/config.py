@@ -106,6 +106,14 @@ class ConsoleConfig(BaseChannelConfig):
     enabled: bool = True
 
 
+class MatrixConfig(BaseChannelConfig):
+    """Matrix channel configuration."""
+
+    homeserver: str = ""
+    user_id: str = ""
+    access_token: str = ""
+
+
 class VoiceChannelConfig(BaseChannelConfig):
     """Voice channel: Twilio ConversationRelay + Cloudflare Tunnel."""
 
@@ -134,6 +142,7 @@ class ChannelConfig(BaseModel):
     mattermost: MattermostConfig = MattermostConfig()
     mqtt: MQTTConfig = MQTTConfig()
     console: ConsoleConfig = ConsoleConfig()
+    matrix: MatrixConfig = MatrixConfig()
     voice: VoiceChannelConfig = VoiceChannelConfig()
 
 
