@@ -656,7 +656,7 @@ Matrix 频道通过 [matrix-nio](https://github.com/poljar/matrix-nio) 库将 Co
 | QQ         | qq         | app_id, client_secret                                                                   |
 | Telegram   | telegram   | bot_token；可选 http_proxy, http_proxy_auth                                             |
 | Mattermost | mattermost | url, bot_token; 可选 show_typing, dm_policy, allow_from                                 |
-| Matrix     | matrix     | homeserver, user_id, access_token                                   |
+| Matrix     | matrix     | homeserver, user_id, access_token                                                       |
 
 各频道字段与完整结构见上文表格及 [配置与工作目录](./config)。
 
