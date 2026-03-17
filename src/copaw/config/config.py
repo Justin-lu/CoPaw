@@ -61,6 +61,7 @@ class DingTalkConfig(BaseChannelConfig):
     robot_code: str = ""
     media_dir: Optional[str] = None
 
+
 class FeishuConfig(BaseChannelConfig):
     """Feishu/Lark channel: app_id, app_secret; optional encrypt_key,
     verification_token for event handler. media_dir for received media.
