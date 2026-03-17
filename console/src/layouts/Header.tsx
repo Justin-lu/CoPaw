@@ -1,5 +1,7 @@
 import { Layout, Space } from "antd";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import ThemeToggleButton from "../components/ThemeToggleButton";
+import AgentSelector from "../components/AgentSelector";
 import { useTranslation } from "react-i18next";
 import {
   FileTextOutlined,
@@ -16,9 +18,13 @@ const { Header: AntHeader } = Layout;
 const NAV_URLS = {
   docs: "https://copaw.agentscope.io/docs/intro",
   faq: "https://copaw.agentscope.io/docs/faq",
-  changelog: "https://github.com/agentscope-ai/CoPaw/releases",
   github: "https://github.com/agentscope-ai/CoPaw",
 } as const;
+
+function getReleaseNotesUrl(lang: string): string {
+  const websiteLang = lang.startsWith("zh") ? "zh" : "en";
+  return `https://copaw.agentscope.io/release-notes?lang=${websiteLang}`;
+}
 
 const keyToLabel: Record<string, string> = {
   chat: "nav.chat",
@@ -42,7 +48,7 @@ interface HeaderProps {
 }
 
 export default function Header({ selectedKey }: HeaderProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const handleNavClick = (url: string) => {
     if (url) {
@@ -64,11 +70,12 @@ export default function Header({ selectedKey }: HeaderProps) {
         {t(keyToLabel[selectedKey] || "nav.chat")}
       </span>
       <Space size="middle">
+        <AgentSelector />
         <Tooltip title={t("header.changelog")}>
           <Button
             icon={<FileTextOutlined />}
             type="text"
-            onClick={() => handleNavClick(NAV_URLS.changelog)}
+            onClick={() => handleNavClick(getReleaseNotesUrl(i18n.language))}
           >
             {t("header.changelog")}
           </Button>
@@ -101,6 +108,7 @@ export default function Header({ selectedKey }: HeaderProps) {
           </Button>
         </Tooltip>
         <LanguageSwitcher />
+        <ThemeToggleButton />
       </Space>
     </AntHeader>
   );
